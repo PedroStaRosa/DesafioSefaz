@@ -1,0 +1,107 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+</h:head>
+
+<h:body>
+	<p:messages id="messages" closable="true">
+		<p:autoUpdate />
+	</p:messages>
+	<p:growl id="messagem" showDetail="true"></p:growl>
+	<h:form>
+		<p:fieldset legend="Lista de usuários">
+
+			<p:panel id="PainelPrincipal" header="Pesquisar pelo email"
+				style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10" id="PesquisarDados">
+					<h:outputLabel value="Email: "></h:outputLabel>
+					<p:inputText value="#{UsuarioBean.emailUsuarioSelecionado}"
+						validatorMessage="Formato de email incorreto.">
+						<!-- Validar email sem precisar solicitar ao servidor. -->
+						<f:validateRegex
+							pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					</p:inputText>
+				</h:panelGrid>
+				<h:panelGrid columns="2" width="100%" style="text-align:left">
+					<p:commandButton value="Pesquisar" update="@form"
+						actionListener="#{UsuarioBean.pesquisarUsuario}" />
+					<p:commandButton value="Limpar" update="@form"
+						actionListener="#{UsuarioBean.pesquisarTodos}">
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+			<p:column>
+				<p:commandButton value="Adicionar Usuário" update="@form"
+					actionListener="#{UsuarioBean.inserirUsuario}" />
+				<p:commandButton value="Listar todos" update="@form"
+					actionListener="#{UsuarioBean.pesquisarTodos}"
+					style="margin-left:20px" />
+			</p:column>
+			<p></p>
+			<h:outputLabel value="#{UsuarioBean.mensagem}"
+				style="color: red; font-weight: bold " />
+			<p:dataTable value="#{UsuarioBean.listaUsuarios}" var="usuario">
+				<p:column headerText="Nome" sortBy="#{usuario.nome}">
+					<h:outputText value="#{usuario.nome}"></h:outputText>
+				</p:column>
+				<p:column headerText="Email" sortBy="#{usuario.email}">
+					<h:outputText value="#{usuario.email}"></h:outputText>
+				</p:column>
+				<p:column headerText="Telefone principal" style="text-align:center">
+					<h:outputText
+						value="#{usuario.telefones[0].ddd} - #{usuario.telefones[0].numero} (#{usuario.telefones[0].tipo})"></h:outputText>
+				</p:column>
+				<p:column headerText="Telefones cadastrados"
+					style="text-align:center" sortBy="#{usuario.telefones.size()}">
+					<h:outputText value="#{usuario.telefones.size()}"></h:outputText>
+				</p:column>
+				<p:column headerText="Ver telefones" width="8%"
+					style="text-align:center">
+					<p:commandButton icon="pi pi-mobile"
+						action="#{UsuarioBean.listaTelefoneCad}">
+						<f:setPropertyActionListener
+							target="#{UsuarioBean.emailUsuarioSelecionado}"
+							value="#{usuario.email}" />
+					</p:commandButton>
+				</p:column>
+				<p:column headerText="Editar" width="5%" style="text-align:center">
+					<p:commandButton icon="pi pi-pencil"
+						action="#{UsuarioBean.editarUsuario}">
+						<f:setPropertyActionListener
+							target="#{UsuarioBean.emailUsuarioSelecionado}"
+							value="#{usuario.email}" />
+					</p:commandButton>
+				</p:column>
+				<p:column headerText="Remover" width="6%" style="text-align:center">
+					<p:commandButton icon="pi pi-trash" update="@form"
+						action="#{UsuarioBean.removerUsuario}">
+						<f:setPropertyActionListener
+							target="#{UsuarioBean.emailUsuarioSelecionado}"
+							value="#{usuario.email}" />
+						<p:confirm header="Remoção"
+							message="Tem certeza que dejesa excluir #{usuario.nome} ?"></p:confirm>
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<h:panelGrid columns="2" width="100%" style="text-align:center">
+							<p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"
+								icon="ui-icon-check" style="color:green" />
+							<p:commandButton value="Não" styleClass="ui-confirmdialog-no"
+								icon="ui-icon-close" style="color:red" />
+						</h:panelGrid>
+
+					</p:confirmDialog>
+
+
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+	</h:form>
+</h:body>
+</html>

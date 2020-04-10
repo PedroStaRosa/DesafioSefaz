@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<p:panel id="panelPessoa" header="Dados do Usuário"
+			style="margin-bottom:20px">
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Nome " for="nome" />
+				<p:inputText id="nome" required="true"
+					value="#{UsuarioBean.usuario.nome}" />
+				<h:outputLabel value="Email " for="email" />
+				<p:inputText id="email" value="#{UsuarioBean.usuario.email}"
+					disabled="true" />
+			</h:panelGrid>
+		</p:panel>
+		<h:outputLabel value="#{UsuarioBean.mensagem}" style="color: red" />
+		<p></p>
+		<p:panel id="panelLivros" header="Lista de telefones cadastrados"
+			style="margin-bottom:20px">
+			<p:column colspan="4">
+				<p:panelGrid columns="1" style="margin-bottom:20px" cellpadding="10">
+				</p:panelGrid>
+				<p:dataTable id="listaTelefones" var="telefone"
+					value="#{UsuarioBean.usuario.telefones}">
+					<p:column headerText="DDD">
+						<h:outputText value="#{telefone.ddd}" style="width: 20%" />
+					</p:column>
+					<p:column headerText="Numero" style="width: 40%">
+						<h:outputText value="#{telefone.numero}" />
+					</p:column>
+					<p:column headerText="Tipo" style="width: 40%">
+						<h:outputText value="#{telefone.tipo}" />
+					</p:column>
+				</p:dataTable>
+				<p></p>
+				<p:outputLabel
+					value="Você poderá adicionar seus telefones mais tarde, é só editar! "
+					style="color: red" />
+			</p:column>
+		</p:panel>
+		<p:outputLabel value="Deseja adicionar mais telefones?"
+			style="color: blue" />
+		<p:commandButton value="Sim" update="@form"
+			actionListener="#{UsuarioBean.editarUsuario}"
+			style="margin-left:20px" />
+			<p></p>
+		<p:commandButton value="Voltar" update="@form"
+			actionListener="#{UsuarioBean.abrirPesquisarUsuario}"
+			immediate="true" style="margin-left:20px" />
+	</h:form>
+</h:body>
+</html>
