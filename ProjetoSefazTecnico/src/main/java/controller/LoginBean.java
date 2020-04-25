@@ -42,16 +42,21 @@ public class LoginBean {
 			Usuario usuarioPesquisa = this.usuarioDao.pesquisar(this.usuarioInput);
 			if (usuarioPesquisa != null) {
 				if (usuarioPesquisa.getSenha().equals(this.senhaInput)) {
-					FacesContext.getCurrentInstance().getExternalContext().redirect(PESQUISAR);
+
+					FacesContext facesContext = FacesContext.getCurrentInstance();
+					facesContext.getExternalContext().getSessionMap().put("usuarioLogado", usuarioPesquisa);
+					facesContext.getExternalContext().redirect(PESQUISAR);
 				} else {
-					// this.mensagem = "Usuario ou Senha inválida."; // SERÁ DISPARADA CASO ENCONTRE
-					// UM USUÁRIO VALIDO //
-					addMessageError("Usuario ou Senha inválida."); // COM SENHA INCORRETA.
+					addMessageError("Usuario ou Senha inválida.");
+					/*
+					 * SERÁ DISPARADA CASO ENCONTRE UM USUÁRIO VALIDO COM SENHA INCORRETA.
+					 */
 				}
 			} else {
-				// this.mensagem = "Usuario ou Senha inválida.";// SERÁ DISPARADA CASO NÃO
-				// ENCONTRE UM USUÁRIO VALIDO.
 				addMessageError("Usuario ou Senha inválida.");
+				/*
+				 * SERÁ DISPARADA CASO NÃO ENCONTRE UM USUÁRIO VALIDO.
+				 */
 			}
 
 		} catch (IOException e) {

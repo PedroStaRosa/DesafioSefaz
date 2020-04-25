@@ -20,6 +20,7 @@ import util.JpaUtil;
 public class UsuarioBean {
 
 	private Usuario usuario;
+	private Usuario UsuarioLogado;
 	private Telefone telefone;
 	private List<Usuario> listaUsuarios;
 	private String emailUsuarioSelecionado;
@@ -35,6 +36,10 @@ public class UsuarioBean {
 	private static final String EDITAR = "editarUsuario.xhtml";
 
 	public UsuarioBean() {
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		this.UsuarioLogado = (Usuario) facesContext.getExternalContext().getSessionMap().get("usuarioLogado");
+		
 		this.usuario = new Usuario();
 		this.usuario.setTelefones(new ArrayList<Telefone>());
 		this.telefone = new Telefone();
@@ -243,6 +248,14 @@ public class UsuarioBean {
 
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
+	}
+
+	public Usuario getUsuarioLogado() {
+		return UsuarioLogado;
+	}
+
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		UsuarioLogado = usuarioLogado;
 	}
 
 }
