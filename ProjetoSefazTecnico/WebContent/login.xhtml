@@ -97,8 +97,11 @@
 					</p:selectOneRadio>
 				</h:panelGrid>
 				<p:outputLabel value="Área Profissional: " />
-				<p:inputText value="#{loginBean.usuarioCadastro.areaProfissional}"
-					required="true" requiredMessage="* Informe sua área Profissional." />
+				<p:selectOneMenu
+					id="areaProf" value="#{loginBean.usuarioCadastro.areaProfissional}">
+					<f:selectItem itemLabel="Selecione um" itemValue=""/>
+					<f:selectItems value="#{selectOneMenu.areaProfissional}"/>
+				</p:selectOneMenu>
 				<p></p>
 				<p:commandButton actionListener="#{loginBean.cadastrarNovoUsuario}"
 					value="Cadastrar" update="formCadastro:growlDlg,panelCadastro" />
