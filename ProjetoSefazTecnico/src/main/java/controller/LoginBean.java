@@ -44,11 +44,14 @@ public class LoginBean {
 				if (usuarioPesquisa.getSenha().equals(this.senhaInput)) {
 					FacesContext.getCurrentInstance().getExternalContext().redirect(PESQUISAR);
 				} else {
-					this.mensagem = "Usuario ou Senha inválida."; // SERÁ DISPARADA CASO ENCONTRE UM USUÁRIO VALIDO //
-																	// COM SENHA INCORRETA.
+					// this.mensagem = "Usuario ou Senha inválida."; // SERÁ DISPARADA CASO ENCONTRE
+					// UM USUÁRIO VALIDO //
+					addMessageError("Usuario ou Senha inválida."); // COM SENHA INCORRETA.
 				}
 			} else {
-				this.mensagem = "Usuario ou Senha inválida.";// SERÁ DISPARADA CASO NÃO ENCONTRE UM USUÁRIO VALIDO.
+				// this.mensagem = "Usuario ou Senha inválida.";// SERÁ DISPARADA CASO NÃO
+				// ENCONTRE UM USUÁRIO VALIDO.
+				addMessageError("Usuario ou Senha inválida.");
 			}
 
 		} catch (IOException e) {
@@ -65,7 +68,7 @@ public class LoginBean {
 			if (this.usuarioDao.salvar(this.usuarioCadastro)) {
 				addMessage("Usuário cadastrado com Sucesso.");
 			} else {
-				
+
 				addMessageError("Usuário cadastrado com Sucesso.");
 			}
 		} else {

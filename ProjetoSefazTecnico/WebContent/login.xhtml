@@ -12,9 +12,9 @@
 	<p:messages id="messages" closable="true">
 		<p:autoUpdate />
 	</p:messages> -->
-	<p:growl id="growlForm" life="2000" />
-	<h:form id="formLogin">
 
+	<h:form id="formLogin">
+		<p:growl id="growlForm" life="2000" />
 		<p:panel id="basic" header="Login" style="margin-bottom:20px">
 			<h:panelGrid>
 				<h:graphicImage value="/imgs/logomarcaSefaz.png" height="80" />
@@ -27,10 +27,11 @@
 				<p:password value="#{loginBean.senhaInput}" required="true"
 					requiredMessage="Insira sua senha." />
 			</h:panelGrid>
-			<h:panelGrid width="100%" style="text-align:center;margin-botton:20px">
+			<h:panelGrid width="100%"
+				style="text-align:center;margin-botton:20px">
 				<p:commandButton value="Entrar" update="@form"
-					actionListener="#{loginBean.entrar}"/>
-				<br/>
+					actionListener="#{loginBean.entrar}" />
+				<br />
 				<h5>Cadastre-se para achar profissionais ou ser encontrado.</h5>
 				<p:commandButton value="Cadastrar"
 					onclick="PF('dlgCadastroUsuario').show()" type="button" />
