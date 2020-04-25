@@ -14,7 +14,8 @@ import util.JpaUtil;
 public class UsuarioDAOImpl implements UsuarioDAO {
 
 	// EntityManagar, faz a conexão com o banco.
-	// A conexão com o banco so será realizada quando requisitada, apos a transação a mesma é fechada.
+	// A conexão com o banco so será realizada quando requisitada, apos a transação
+	// a mesma é fechada.
 
 	private EntityManager ent;
 	private EntityTransaction tx;
@@ -23,8 +24,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public boolean inserir(Usuario usuario) {
-
+	public boolean salvar(Usuario usuario) {
+		//METODO "SALVAR" FARÁ O PAPEL DE INSERT E UPDATE, ATRAVES DO " MERGE ".
 		try {
 			this.ent = JpaUtil.getEntityManager();
 			tx = ent.getTransaction();
@@ -53,7 +54,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 		try {
 			this.ent = JpaUtil.getEntityManager();
-			Usuario usuarioRemover = ent.find(Usuario.class, emailUsuario );
+			Usuario usuarioRemover = ent.find(Usuario.class, emailUsuario);
 			tx = ent.getTransaction();
 			tx.begin();
 			ent.remove(usuarioRemover);
@@ -79,7 +80,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override
 	public Usuario pesquisar(String email) {
 
-		Usuario usuario = null;
+		Usuario usuario = new Usuario();
 		try {
 			this.ent = JpaUtil.getEntityManager();
 			tx = ent.getTransaction();
@@ -99,8 +100,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return usuario;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
 	public List<Usuario> listarTodos() {
 
 		List<Usuario> usuarioList = new ArrayList<Usuario>();

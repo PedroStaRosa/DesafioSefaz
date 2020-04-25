@@ -67,7 +67,7 @@ public class UsuarioBean {
 	
 	public void salvarUsuario() throws IOException {
 
-		if (this.usuarioDAO.inserir(this.usuario)) {
+		if (this.usuarioDAO.salvar(this.usuario)) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Sucesso !!!"));
 			abrirPesquisarUsuario();

@@ -22,6 +22,9 @@ public class Usuario {
 
 	@Column(name = "senha")
 	private String senha;
+	
+	@Column (name = "areaprofissional")
+	private String areaProfissional;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Telefone> telefones;
@@ -61,10 +64,21 @@ public class Usuario {
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
 	}
+	
+
+	public String getAreaProfissional() {
+		return areaProfissional;
+	}
+
+	public void setAreaProfissional(String areaProfissional) {
+		this.areaProfissional = areaProfissional;
+	}
 
 	@Override
 	public String toString() {
-		return "Usuario [email=" + email + ", nome=" + nome + ", senha=" + senha + ", telefones=" + telefones + "]";
+		return "Usuario [email=" + email + ", nome=" + nome + ", senha=" + senha + ", areaProfissional="
+				+ areaProfissional + ", telefones=" + telefones + "]";
 	}
+
 
 }

@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Desafio Técnico Sefaz</title>
+</h:head>
+
+<h:body>
+	<!-- 
+	<p:messages id="messages" closable="true">
+		<p:autoUpdate />
+	</p:messages> -->
+	<p:growl id="growlForm" life="2000" />
+	<h:form id="formLogin">
+
+		<p:panel id="basic" header="Login" style="margin-bottom:20px">
+			<h:panelGrid>
+				<h:graphicImage value="/imgs/logomarcaSefaz.png" height="80" />
+			</h:panelGrid>
+			<h:panelGrid columns="2" cellpadding="10">
+				<h:outputLabel value="Usuario :" />
+				<p:inputText id="usuario" value="#{loginBean.usuarioInput}"
+					required="true" requiredMessage="Insira um usuário." />
+				<h:outputLabel value="Senha :" />
+				<p:password value="#{loginBean.senhaInput}" required="true"
+					requiredMessage="Insira sua senha." />
+			</h:panelGrid>
+			<h:panelGrid width="100%" style="text-align:center;margin-botton:20px">
+				<p:commandButton value="Entrar" update="@form"
+					actionListener="#{loginBean.entrar}"/>
+				<br/>
+				<h5>Cadastre-se para achar profissionais ou ser encontrado.</h5>
+				<p:commandButton value="Cadastrar"
+					onclick="PF('dlgCadastroUsuario').show()" type="button" />
+				<h:outputLabel value="#{LoginBean.mensagem}"
+					style="color: red; font-weight: bold " />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+	<h:form id="formCadastro">
+		<p:growl id="growlDlg" life="2000" />
+		<p:dialog id="dlgCadastro" widgetVar="dlgCadastroUsuario"
+			showEffect="explode" modal="true" resizable="false"
+			header="Cadastro usuário" closable="false">
+			<!-- Dados primarios -->
+			<p:panel id="panelCadastro">
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Nome *" for="nome" />
+					<p:inputText id="nome" required="true"
+						value="#{loginBean.usuarioCadastro.nome}"
+						requiredMessage="* Insira um nome."
+						validatorMessage="Nome não pode ter mais de 100 letras.">
+						<f:validateLength maximum="100" />
+						<p:clientValidator event="keyup" />
+					</p:inputText>
+					<h:outputLabel value="email *" for="email" />
+					<p:inputText id="email" value="#{loginBean.usuarioCadastro.email}"
+						required="true" requiredMessage="* Insira um email."
+						validatorMessage="Formato de email incorreto.">
+						<!-- Validar email sem precisar solicitar ao back. -->
+						<f:validateRegex
+							pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					</p:inputText>
+					<h:outputLabel value="Senha: *" />
+					<p:password id="pwd1" value="#{loginBean.usuarioCadastro.senha}"
+						match="pwd2" label="Password 1" redisplay="true"
+						requiredMessage="* Insira uma senha." required="true"
+						validatorMessage="* Senhas não coincidem." />
+					<h:outputLabel value="Confirme senha: *" />
+					<p:password id="pwd2" value="#{loginBean.usuarioCadastro.senha}"
+						label="Password 2" redisplay="true" />
+					<h:outputLabel value="* Campo obrigatório. " style="color: red" />
+				</h:panelGrid>
+				<h:outputLabel value="#{loginBean.mensagem}" style="color: red" />
+				<br></br>
+				<p:outputLabel value="Insira um telefone principal." />
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Telefone:" />
+					<p:inputText size="3"
+						value="#{loginBean.telefoneUsuarioCadastro.ddd}" required="true"
+						requiredMessage="* Informe o DDD." />
+					<p:inputText value="#{loginBean.telefoneUsuarioCadastro.numero}"
+						required="true" requiredMessage="* Informe seu telefone." />
+				</h:panelGrid>
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+					<p:outputLabel value="Tipo:" />
+					<p:selectOneRadio id="TipoTelefone"
+						value="#{loginBean.telefoneUsuarioCadastro.tipo}"
+						unselectable="true" required="true"
+						requiredMessage="* Informe o tipo do telefone.">
+						<f:selectItem itemLabel="Celular" itemValue="celular" />
+						<f:selectItem itemLabel="Fax" itemValue="fax" />
+						<f:selectItem itemLabel="Residencial" itemValue="residencial" />
+					</p:selectOneRadio>
+				</h:panelGrid>
+				<p:outputLabel value="Área Profissional: " />
+				<p:inputText value="#{loginBean.usuarioCadastro.areaProfissional}"
+					required="true" requiredMessage="* Informe sua área Profissional." />
+				<p></p>
+				<p:commandButton actionListener="#{loginBean.cadastrarNovoUsuario}"
+					value="Cadastrar" update="formCadastro:growlDlg,panelCadastro" />
+				<p:commandButton onclick="dlgCadastro.hide();" process="@none"
+					immediate="true" value="Voltar">
+					<p:resetInput target="formCadastro"></p:resetInput>
+				</p:commandButton>
+			</p:panel>
+		</p:dialog>
+
+	</h:form>
+</h:body>
+</html>

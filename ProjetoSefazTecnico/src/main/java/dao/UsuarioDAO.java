@@ -6,7 +6,7 @@ import entity.Usuario;
 
 public interface UsuarioDAO {
 
-	public boolean inserir(Usuario usuario);
+	public boolean salvar(Usuario usuario);
 
 	public void remover(String emailUsuario);
 
