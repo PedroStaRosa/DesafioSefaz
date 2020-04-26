@@ -26,7 +26,7 @@ public class LoginBean {
 	private Telefone telefoneUsuarioCadastro;
 	private String mensagem;
 
-	private static final String PAINEL_ADM = "paginas/adm/AdmCarregarUsuarios.xhtml";
+	private static final String PAINEL_ADM = "paginas/adm/admCarregarUsuarios.xhtml";
 	private static final String PAINEL_USER = "paginas/user/inicio.xhtml";
 	// private static final String LOGIN = "login.xhtml";
 
