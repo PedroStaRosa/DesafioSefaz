@@ -19,7 +19,7 @@
 
 				<h:outputLabel value="Nome *" for="nome" />
 				<p:inputText id="nome" required="true"
-					value="#{UsuarioBean.usuario.nome}"
+					value="#{admBean.usuario.nome}"
 					requiredMessage="* Insira um nome."
 					validatorMessage="Nome não pode ter mais de 100 letras.">
 					<f:validateLength maximum="100" />
@@ -27,7 +27,7 @@
 				</p:inputText>
 
 				<h:outputLabel value="email *" for="email" />
-				<p:inputText id="email" value="#{UsuarioBean.usuario.email}"
+				<p:inputText id="email" value="#{admBean.usuario.email}"
 					required="true" requiredMessage="* Insira um email."
 					validatorMessage="Formato de email incorreto.">
 					<!-- Validar email sem precisar solicitar ao servidor. -->
@@ -36,16 +36,16 @@
 				</p:inputText>
 
 				<h:outputLabel value="Senha: *" />
-				<p:password id="pwd1" value="#{UsuarioBean.usuario.senha}"
+				<p:password id="pwd1" value="#{admBean.usuario.senha}"
 					match="pwd2" label="Password 1" redisplay="true"
 					requiredMessage="* Insira uma senha." required="true"
 					validatorMessage="* Senhas não coincidem." />
 				<h:outputLabel value="Confirme senha: *" />
-				<p:password id="pwd2" value="#{UsuarioBean.usuario.senha}"
+				<p:password id="pwd2" value="#{admBean.usuario.senha}"
 					label="Password 2" redisplay="true" />
 				<p:outputLabel value="Área Profissional: " />
 				<p:selectOneMenu id="areaProf"
-					value="#{loginBean.usuarioCadastro.areaProfissional}"
+					value="#{admBean.usuario.areaProfissional}"
 					required="true"
 					requiredMessage="* Selecione uma área profissional.">
 					<f:selectItem itemLabel="Selecione um" itemValue="" />
@@ -56,7 +56,7 @@
 			</h:panelGrid>
 
 		</p:panel>
-		<h:outputLabel value="#{UsuarioBean.mensagem}" style="color: red" />
+		<h:outputLabel value="#{admBean.mensagem}" style="color: red" />
 		<p></p>
 		<p:panel id="panelTelefones" header="Adicionar telefones"
 			style="margin-bottom:20px">
@@ -64,16 +64,15 @@
 				<p:panelGrid columns="1" style="margin-bottom:20px" cellpadding="10">
 					<h:panelGrid columns="2" style="margin-bottom:20px">
 						<h:outputLabel value="DDD " />
-						<p:selectOneMenu value="#{UsuarioBean.telefone.ddd}"
-							required="true" requiredMessage="* Selecione um DDD.">
+						<p:selectOneMenu value="#{admBean.telefone.ddd}">
 							<f:selectItem itemLabel="DDD" itemValue="" />
 							<f:selectItems value="#{selectOneMenu.ddd}" />
 						</p:selectOneMenu>
 						<h:outputLabel value="Numero" />
-						<p:inputMask value="#{UsuarioBean.telefone.numero}"
+						<p:inputMask value="#{admBean.telefone.numero}"
 							mask="99999999?9" />
 						<h:outputLabel value="Tipo " />
-						<p:selectOneRadio id="tipo" value="#{UsuarioBean.telefone.tipo}"
+						<p:selectOneRadio id="tipo" value="#{admBean.telefone.tipo}"
 							unselectable="true">
 							<f:selectItem itemLabel="Celular" itemValue="Celular" />
 							<f:selectItem itemLabel="Residencial" itemValue="Residencial" />
@@ -81,11 +80,11 @@
 						</p:selectOneRadio>
 						<p:commandButton value="Inserir telefone"
 							update="listaTelefones,panelTelefones"
-							actionListener="#{UsuarioBean.inserirTelefones}" />
+							actionListener="#{admBean.inserirTelefones}" />
 					</h:panelGrid>
 				</p:panelGrid>
 				<p:dataTable id="listaTelefones" var="telefone"
-					value="#{UsuarioBean.usuario.telefones}">
+					value="#{admBean.usuario.telefones}">
 					<p:column headerText="DDD">
 						<h:outputText value="#{telefone.ddd}" style="width: 20%" />
 					</p:column>
@@ -103,7 +102,7 @@
 
 		</p:panel>
 		<p:commandButton value="OK" update="@form"
-			actionListener="#{UsuarioBean.novoUsuario}">
+			actionListener="#{admBean.novoUsuario}">
 			<p:confirm header="Cadastro" message="Os dados esta corretos ?"></p:confirm>
 
 		</p:commandButton>
@@ -119,7 +118,7 @@
 		</p:confirmDialog>
 
 		<p:commandButton value="Voltar" update="@form"
-			actionListener="#{UsuarioBean.abrirPesquisarUsuario}"
+			actionListener="#{admBean.abrirPesquisarUsuario}"
 			immediate="true" style="margin-left:20px" />
 	</h:form>
 </h:body>

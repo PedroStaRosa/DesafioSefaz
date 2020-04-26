@@ -19,7 +19,7 @@
 
 				<h:outputLabel value="Nome *" for="nome" />
 				<p:inputText id="nome" required="true"
-					value="#{UsuarioBean.usuario.nome}"
+					value="#{admBean.usuario.nome}"
 					requiredMessage="* Insira um nome."
 					validatorMessage="Nome não pode ter mais de 100 letras.">
 					<f:validateLength maximum="100" />
@@ -27,24 +27,24 @@
 				</p:inputText>
 
 				<h:outputLabel value="email *" for="email" />
-				<p:inputText id="email" value="#{UsuarioBean.usuario.email}"
+				<p:inputText id="email" value="#{admBean.usuario.email}"
 					disabled="true">
 				</p:inputText>
 
 				<h:outputLabel value="Senha: *" />
-				<p:password id="pwd1" value="#{UsuarioBean.usuario.senha}"
+				<p:password id="pwd1" value="#{admBean.usuario.senha}"
 					match="pwd2" label="Password 1" redisplay="true"
 					requiredMessage="* Insira uma senha." required="true"
 					validatorMessage="* Senhas não coincidem." />
 				<h:outputLabel value="Confirme senha: *" />
-				<p:password id="pwd2" value="#{UsuarioBean.usuario.senha}"
+				<p:password id="pwd2" value="#{admBean.usuario.senha}"
 					label="Password 2" redisplay="true" />
 
 				<h:outputLabel value="* Campo obrigatório. " style="color: red" />
 			</h:panelGrid>
 
 		</p:panel>
-		<h:outputLabel value="#{UsuarioBean.mensagem}" style="color: red" />
+		<h:outputLabel value="#{admBean.mensagem}" style="color: red" />
 		<p></p>
 		<p:panel id="panelLivros" header="Adicionar telefones"
 			style="margin-bottom:20px">
@@ -54,25 +54,25 @@
 						cellpadding="10">
 						<h:panelGrid columns="2" style="margin-bottom:20px">
 							<h:outputLabel value="DDD " />
-							<p:selectOneMenu value="#{UsuarioBean.telefone.ddd}">
+							<p:selectOneMenu value="#{admBean.telefone.ddd}">
 								<f:selectItem itemLabel="DDD" itemValue="" />
 								<f:selectItems value="#{selectOneMenu.ddd}" />
 							</p:selectOneMenu>
 							<h:outputLabel value="Numero" />
-							<p:inputMask value="#{UsuarioBean.telefone.numero}"  mask="99999999?9"/>
+							<p:inputMask value="#{admBean.telefone.numero}"  mask="99999999?9"/>
 							<h:outputLabel value="Tipo " />
-							<p:selectOneRadio id="tipo" value="#{UsuarioBean.telefone.tipo}"
+							<p:selectOneRadio id="tipo" value="#{admBean.telefone.tipo}"
 								unselectable="true">
 								<f:selectItem itemLabel="Celular" itemValue="Celular" />
 								<f:selectItem itemLabel="Residencial" itemValue="Residencial" />
 								<f:selectItem itemLabel="Fax" itemValue="Fax" />
 							</p:selectOneRadio>
 							<p:commandButton value="Inserir telefone" update="listaTelefones"
-								actionListener="#{UsuarioBean.inserirTelefones}" />
+								actionListener="#{admBean.inserirTelefones}" />
 						</h:panelGrid>
 					</p:panelGrid>
 					<p:dataTable id="listaTelefones" var="telefone"
-						value="#{UsuarioBean.usuario.telefones}">
+						value="#{admBean.usuario.telefones}">
 						<p:column headerText="DDD">
 							<h:outputText value="#{telefone.ddd}" style="width: 20%" />
 						</p:column>
@@ -91,7 +91,7 @@
 
 		</p:panel>
 		<p:commandButton value="OK" update="@form"
-			actionListener="#{UsuarioBean.salvarUsuario}">
+			actionListener="#{admBean.salvarUsuario}">
 			<p:confirm header="Edição" message="Os dados esta corretos ?"></p:confirm>
 
 		</p:commandButton>
@@ -107,7 +107,7 @@
 		</p:confirmDialog>
 
 		<p:commandButton value="Voltar" update="@form"
-			actionListener="#{UsuarioBean.abrirPesquisarUsuario}"
+			actionListener="#{admBean.abrirPesquisarUsuario}"
 			immediate="true" style="margin-left:20px" />
 	</h:form>
 </h:body>

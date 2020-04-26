@@ -18,7 +18,7 @@
 	<p>
 		<p:outputLabel value="Painel Administrativo" />
 	</p>
-	<p:outputLabel value="Olá #{UsuarioBean.usuarioLogado.nome}." />
+	<p:outputLabel value="Olá #{admBean.usuarioLogado.nome}." />
 	<h:form>
 		<p:fieldset legend="Lista de usuários">
 
@@ -26,7 +26,7 @@
 				style="margin-bottom:20px">
 				<h:panelGrid columns="2" cellpadding="10" id="PesquisarDados">
 					<h:outputLabel value="Email: "></h:outputLabel>
-					<p:inputText value="#{UsuarioBean.emailUsuarioSelecionado}"
+					<p:inputText value="#{admBean.emailUsuarioSelecionado}"
 						validatorMessage="Formato de email incorreto.">
 						<!-- Validar email sem precisar solicitar ao servidor. -->
 						<f:validateRegex
@@ -35,23 +35,23 @@
 				</h:panelGrid>
 				<h:panelGrid columns="2" width="100%" style="text-align:left">
 					<p:commandButton value="Pesquisar" update="@form"
-						actionListener="#{UsuarioBean.pesquisarUsuario}" />
+						actionListener="#{admBean.pesquisarUsuario}" />
 					<p:commandButton value="Limpar" update="@form"
-						actionListener="#{UsuarioBean.pesquisarTodos}">
+						actionListener="#{admBean.pesquisarTodos}">
 					</p:commandButton>
 				</h:panelGrid>
 			</p:panel>
 			<p:column>
 				<p:commandButton value="Adicionar Usuário" update="@form"
-					actionListener="#{UsuarioBean.inserirUsuario}" />
+					actionListener="#{admBean.inserirUsuario}" />
 				<p:commandButton value="Listar todos" update="@form"
-					actionListener="#{UsuarioBean.pesquisarTodos}"
+					actionListener="#{admBean.pesquisarTodos}"
 					style="margin-left:20px" />
 			</p:column>
 			<p></p>
-			<h:outputLabel value="#{UsuarioBean.mensagem}"
+			<h:outputLabel value="#{admBean.mensagem}"
 				style="color: red; font-weight: bold " />
-			<p:dataTable value="#{UsuarioBean.listaUsuarios}" var="usuario">
+			<p:dataTable value="#{admBean.listaUsuarios}" var="usuario">
 				<p:column headerText="Nome" sortBy="#{usuario.nome}"
 					style="text-align:center">
 					<h:outputText value="#{usuario.nome}"></h:outputText>
@@ -75,26 +75,26 @@
 				<p:column headerText="Ver telefones" width="8%"
 					style="text-align:center">
 					<p:commandButton icon="pi pi-mobile"
-						action="#{UsuarioBean.listaTelefoneCad}"
+						action="#{admBean.listaTelefoneCad}"
 						oncomplete="PF('dlgTelefoneUser').show()" update="@form">
 						<f:setPropertyActionListener
-							target="#{UsuarioBean.emailUsuarioSelecionado}"
+							target="#{admBean.emailUsuarioSelecionado}"
 							value="#{usuario.email}" />
 					</p:commandButton>
 				</p:column>
 				<p:column headerText="Editar" width="5%" style="text-align:center">
 					<p:commandButton icon="pi pi-pencil"
-						action="#{UsuarioBean.editarUsuario}">
+						action="#{admBean.editarUsuario}">
 						<f:setPropertyActionListener
-							target="#{UsuarioBean.emailUsuarioSelecionado}"
+							target="#{admBean.emailUsuarioSelecionado}"
 							value="#{usuario.email}" />
 					</p:commandButton>
 				</p:column>
 				<p:column headerText="Remover" width="6%" style="text-align:center">
 					<p:commandButton icon="pi pi-trash" update="@form"
-						action="#{UsuarioBean.removerUsuario}">
+						action="#{admBean.removerUsuario}">
 						<f:setPropertyActionListener
-							target="#{UsuarioBean.emailUsuarioSelecionado}"
+							target="#{admBean.emailUsuarioSelecionado}"
 							value="#{usuario.email}" />
 						<p:confirm header="Remoção"
 							message="Tem certeza que dejesa excluir #{usuario.nome} ?"></p:confirm>
@@ -116,10 +116,10 @@
 		<p:dialog id="dlgTelefone" header="Telefones"
 			widgetVar="dlgTelefoneUser" modal="true" showEffect="explode"
 			closable="false">
-			<p:outputLabel value="#{UsuarioBean.usuario.nome}" />
+			<p:outputLabel value="#{admBean.usuario.nome}" />
 			<p:panel>
 				<p:dataTable id="listaTelefones" var="telefone"
-					value="#{UsuarioBean.usuario.telefones}">
+					value="#{admBean.usuario.telefones}">
 					<p:column headerText="Telefone" style="text-align:center">
 						<h:outputText
 							value="(#{telefone.ddd}) #{telefone.numero} - #{telefone.tipo}" />
