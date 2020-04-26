@@ -10,15 +10,25 @@
 </h:head>
 
 <h:body>
-	<p:outputLabel value="Olá #{UsuarioBean.usuarioLogado.nome}" />
+	<p:outputLabel value="Menu usuário" />
 
-	<h2>Bem vindo a lista de profisionais</h2>
+	<h2>Olá #{UsuarioBean.usuarioLogado.nome}, bem vindo a lista de
+		profissionais</h2>
 
 	<h:form id="formPrinc">
+		<p:growl id="growlForm" life="3000" showDetail="true" />
 		<p:menubar>
 			<p:submenu label=" Pesquisar Profissionais" icon="pi pi-search">
+				<p:menuitem value="Área Profissional"
+					onclick="PF('dlgPesquisar').show()" />
 			</p:submenu>
-			<p:submenu label=" Meus Dados" icon="pi pi-id-card">
+			<p:submenu label=" Minha Conta" icon="pi pi-id-card">
+				<p:menuitem value="Editar" action="#{UsuarioBean.editarUsuario}">
+					<f:setPropertyActionListener
+						target="#{UsuarioBean.emailUsuarioSelecionado}"
+						value="#{UsuarioBean.usuarioLogado.email}" />
+				</p:menuitem>
+				<p:menuitem value="Excluir"></p:menuitem>
 			</p:submenu>
 			<p:submenu label=" Sair" icon="pi pi-power-off">
 			</p:submenu>
@@ -81,8 +91,24 @@
 				<p:commandButton value="Ok" onclick="PF('dlgTelefoneUser').hide();" />
 			</p:panel>
 		</p:dialog>
-		<p:dialog header="Área Profissional"></p:dialog>
+
+		<p:dialog id="dlgPesquisarProfissional" header="Área Profissional"
+			widgetVar="dlgPesquisar" resizable="false">
+			<h:panelGrid columns="2" cellpadding="2">
+				<p:selectOneMenu id="areaProf"
+					value="#{UsuarioBean.areaProfissionalSelecionada}">
+					<f:selectItem itemLabel="Todas" itemValue="" />
+					<f:selectItems value="#{selectOneMenu.areaProfissional}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Pesquisar"
+					actionListener="#{UsuarioBean.pesquisarTodos}"
+					update="formPrinc,dlgPesquisarProfissional"
+					style="margin-botton:10px">
+				</p:commandButton>
+			</h:panelGrid>
+		</p:dialog>
 
 	</h:form>
+
 </h:body>
 </html>

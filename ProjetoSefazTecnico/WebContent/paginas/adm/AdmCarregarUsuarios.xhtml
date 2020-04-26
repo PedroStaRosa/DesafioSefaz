@@ -5,6 +5,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<title>Menu Administrativo</title>
 	<h:outputStylesheet name="primeicons/primeicons.css"
 		library="primefaces" />
 </h:head>
@@ -74,7 +75,8 @@
 				<p:column headerText="Ver telefones" width="8%"
 					style="text-align:center">
 					<p:commandButton icon="pi pi-mobile"
-						action="#{UsuarioBean.listaTelefoneCad}">
+						action="#{UsuarioBean.listaTelefoneCad}"
+						oncomplete="PF('dlgTelefoneUser').show()" update="@form">
 						<f:setPropertyActionListener
 							target="#{UsuarioBean.emailUsuarioSelecionado}"
 							value="#{usuario.email}" />
@@ -107,11 +109,26 @@
 						</h:panelGrid>
 
 					</p:confirmDialog>
-
-
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
+
+		<p:dialog id="dlgTelefone" header="Telefones"
+			widgetVar="dlgTelefoneUser" modal="true" showEffect="explode"
+			closable="false">
+			<p:outputLabel value="#{UsuarioBean.usuario.nome}" />
+			<p:panel>
+				<p:dataTable id="listaTelefones" var="telefone"
+					value="#{UsuarioBean.usuario.telefones}">
+					<p:column headerText="Telefone" style="text-align:center">
+						<h:outputText
+							value="(#{telefone.ddd}) #{telefone.numero} - #{telefone.tipo}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Ok" onclick="PF('dlgTelefoneUser').hide();" />
+			</p:panel>
+		</p:dialog>
+
 	</h:form>
 </h:body>
 </html>

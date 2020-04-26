@@ -100,7 +100,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return usuario;
 	}
 
-	public List<Usuario> listarTodos() {
+	public List<Usuario> listarTodos(String areprofissional) {
 
 		List<Usuario> usuarioList = new ArrayList<Usuario>();
 
@@ -108,7 +108,12 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			this.ent = JpaUtil.getEntityManager();
 			tx = ent.getTransaction();
 			tx.begin();
-			usuarioList = ent.createQuery("From Usuario u").getResultList();
+			if (areprofissional.equals("")) {
+				usuarioList = ent.createQuery("From Usuario u").getResultList();
+			} else {
+				usuarioList = ent.createQuery("From Usuario u where areaprofissional = '" + areprofissional + "'")
+						.getResultList();
+			}
 
 		} catch (Exception e) {
 			if (ent.isOpen()) {

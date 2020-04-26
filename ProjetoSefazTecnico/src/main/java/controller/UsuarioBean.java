@@ -25,37 +25,46 @@ public class UsuarioBean {
 	private List<Usuario> listaUsuarios;
 	private String emailUsuarioSelecionado;
 	private String areaProfissionalSelecionada = "";
-	private long idTelefoneSelecionado; // PARA IMPLEMENTAR CASO USUARIO QUERIA EXCLUIR UM TELEFONE DE SUA LISTA( EM DESENV. )
+	private long idTelefoneSelecionado; // PARA IMPLEMENTAR CASO USUARIO QUERIA EXCLUIR UM TELEFONE DE SUA LISTA( EM
+										// DESENV. )
 
 	private UsuarioDAO usuarioDAO;
 	private String mensagem;
-	private Usuario usuarioExiste; // SERÁ PREENCHIDO NO INSERIR CASO cpf SEJA ENCONTRADO, VALIDA CPF EXISTENTE
+	private Usuario usuarioExiste; // SERÁ PREENCHIDO NO INSERIR CASO EMAIL SEJA ENCONTRADO, VALIDA EMAIL EXISTENTE
 
 	private static final String INSERIR = "inserirUsuario.xhtml";
 	private static final String PESQUISAR = "AdmCarregarUsuarios.xhtml";
 	private static final String LISTATELEFONE = "listaTelefone.xhtml";
 	private static final String EDITAR = "editarUsuario.xhtml";
+	private static final String MEUS_DADOS = "meusDados.xhtml";
 
 	public UsuarioBean() {
-		
+
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		this.UsuarioLogado = (Usuario) facesContext.getExternalContext().getSessionMap().get("usuarioLogado");
-		
+
 		this.usuario = new Usuario();
 		this.usuario.setTelefones(new ArrayList<Telefone>());
 		this.telefone = new Telefone();
 		this.listaUsuarios = new ArrayList<Usuario>();
 		this.usuarioDAO = new UsuarioDAOImpl();
-		this.listaUsuarios = this.usuarioDAO.listarTodos();
+		this.listaUsuarios = this.usuarioDAO.listarTodos("");
 		if (this.listaUsuarios.isEmpty()) {
-			this.mensagem = "Lista vazia - Nenhum Usuario Cadastrado";
+			addMessage("Lista vazia", "Nenhum usuário cadastrado");
+			;
 		}
 	}
 
 	public void pesquisarTodos() {
-		this.emailUsuarioSelecionado = "";
-		addMessage("Lista Carregada com Sucesso", "Sucesso");
-		this.listaUsuarios = this.usuarioDAO.listarTodos();
+		this.emailUsuarioSelecionado = ""; // PERDENDO O VALOR, CASO VENHA DE UMA PESQUISA INDIVIDUAL.
+		System.out.println("area" + this.areaProfissionalSelecionada);
+		this.listaUsuarios = this.usuarioDAO.listarTodos(this.areaProfissionalSelecionada);
+		if (this.listaUsuarios.isEmpty()) {
+			addMessageError("Desculpe.", "Não temos nenhum profissional cadastrado nessa área");
+		} else {
+			addMessage("Lista Carregada com Sucesso", "Sucesso");
+		}
+
 	}
 
 	public void pesquisarUsuario() {
@@ -70,7 +79,7 @@ public class UsuarioBean {
 			addMessage("Buscar realizada com sucesso", "Sucesso!!");
 		}
 	}
-	
+
 	public void salvarUsuario() throws IOException {
 
 		if (this.usuarioDAO.salvar(this.usuario)) {
@@ -88,10 +97,9 @@ public class UsuarioBean {
 	public void removerUsuario() {
 
 		this.usuarioDAO.remover(emailUsuarioSelecionado);
-		this.listaUsuarios = this.usuarioDAO.listarTodos();
 		limpar();
+		this.listaUsuarios = this.usuarioDAO.listarTodos("");
 		addMessage("* Usuário deletado com sucesso", "Lista recarregada");
-		
 
 	}
 
@@ -154,9 +162,10 @@ public class UsuarioBean {
 		Usuario usuarioSelecionado = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
 		this.usuario = usuarioSelecionado;
 		System.out.println(this.usuario.getNome());
-		//abrirListaTelefone();
+		this.emailUsuarioSelecionado = "";
+		// abrirListaTelefone();
 	}
-	
+
 	public void limparMensagem() {
 		this.mensagem = "";
 	}
@@ -188,6 +197,7 @@ public class UsuarioBean {
 	// DIRECIONAR PAGINAS
 	public void abrirPesquisarUsuario() throws IOException {
 		this.limpar();
+		this.listaUsuarios = this.usuarioDAO.listarTodos(this.areaProfissionalSelecionada);
 		FacesContext.getCurrentInstance().getExternalContext().redirect(PESQUISAR);
 	}
 
@@ -202,7 +212,11 @@ public class UsuarioBean {
 	public void abrirListaTelefone() throws IOException {
 		FacesContext.getCurrentInstance().getExternalContext().redirect(LISTATELEFONE);
 	}
-	
+
+	public void abrirMeusDados() throws IOException {
+		FacesContext.getCurrentInstance().getExternalContext().redirect(MEUS_DADOS);
+	}
+
 	// GETTERS AND SETTERS
 	public Usuario getUsuario() {
 		return usuario;
@@ -267,5 +281,4 @@ public class UsuarioBean {
 	public void setAreaProfissionalSelecionada(String areaProfissionalSelecionada) {
 		this.areaProfissionalSelecionada = areaProfissionalSelecionada;
 	}
-
 }

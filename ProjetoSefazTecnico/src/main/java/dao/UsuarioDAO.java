@@ -14,6 +14,6 @@ public interface UsuarioDAO {
 
 	public Usuario pesquisar(String email);
 
-	public List<Usuario> listarTodos();
+	public List<Usuario> listarTodos(String areprofissional);
 	
 }

@@ -11,8 +11,9 @@
 		<p:autoUpdate />
 	</p:messages>
 	<p:growl id="messagem" showDetail="true"></p:growl>
-
+	<h1>Meus dados</h1>
 	<h:form id="form">
+
 		<p:panel id="panelPessoa" header="Editar Usuário"
 			style="margin-bottom:20px">
 			<h:panelGrid columns="2">
@@ -59,7 +60,8 @@
 								<f:selectItems value="#{selectOneMenu.ddd}" />
 							</p:selectOneMenu>
 							<h:outputLabel value="Numero" />
-							<p:inputMask value="#{UsuarioBean.telefone.numero}"  mask="99999999?9"/>
+							<p:inputMask value="#{UsuarioBean.telefone.numero}"
+								mask="99999999?9" />
 							<h:outputLabel value="Tipo " />
 							<p:selectOneRadio id="tipo" value="#{UsuarioBean.telefone.tipo}"
 								unselectable="true">
