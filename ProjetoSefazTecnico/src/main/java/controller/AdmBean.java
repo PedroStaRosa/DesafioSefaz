@@ -33,7 +33,6 @@ public class AdmBean {
 
 	private static final String INSERIR = "inserirUsuario.xhtml";
 	private static final String PESQUISAR = "painelAdm.xhtml";
-	private static final String LISTATELEFONE = "listaTelefone.xhtml";
 	private static final String EDITAR = "editarUsuario.xhtml";
 	private static final String MEUS_DADOS = "meusDados.xhtml";
 
@@ -163,7 +162,6 @@ public class AdmBean {
 		this.usuario = usuarioSelecionado;
 		System.out.println(this.usuario.getNome());
 		this.emailUsuarioSelecionado = "";
-		// abrirListaTelefone();
 	}
 
 	public void limparMensagem() {
@@ -207,10 +205,6 @@ public class AdmBean {
 
 	public void abrirEditarUsuario() throws IOException {
 		FacesContext.getCurrentInstance().getExternalContext().redirect(EDITAR);
-	}
-
-	public void abrirListaTelefone() throws IOException {
-		FacesContext.getCurrentInstance().getExternalContext().redirect(LISTATELEFONE);
 	}
 
 	public void abrirMeusDados() throws IOException {

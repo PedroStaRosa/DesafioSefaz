@@ -13,7 +13,6 @@ import dao.UsuarioDAO;
 import dao.UsuarioDAOImpl;
 import entity.Telefone;
 import entity.Usuario;
-import util.JpaUtil;
 
 @ManagedBean(name = "UsuarioBean")
 @SessionScoped
@@ -30,12 +29,8 @@ public class UsuarioBean {
 
 	private UsuarioDAO usuarioDAO;
 	private String mensagem;
-	private Usuario usuarioExiste; // SERÁ PREENCHIDO NO INSERIR CASO EMAIL SEJA ENCONTRADO, VALIDA EMAIL EXISTENTE
 
-	private static final String INSERIR = "inserirUsuario.xhtml";
-	private static final String PESQUISAR = "inicio.xhtml";
-	private static final String LISTATELEFONE = "listaTelefone.xhtml";
-	private static final String EDITAR = "meusDados.xhtml";
+	private static final String INICIO = "inicio.xhtml";
 	private static final String MEUS_DADOS = "meusDados.xhtml";
 
 	public UsuarioBean() {
@@ -57,7 +52,6 @@ public class UsuarioBean {
 
 	public void pesquisarTodos() {
 		this.emailUsuarioSelecionado = ""; // PERDENDO O VALOR, CASO VENHA DE UMA PESQUISA INDIVIDUAL.
-		System.out.println("area" + this.areaProfissionalSelecionada);
 		this.listaUsuarios = this.usuarioDAO.listarTodos(this.areaProfissionalSelecionada);
 		if (this.listaUsuarios.isEmpty()) {
 			addMessageError("Desculpe.", "Não temos nenhum profissional cadastrado nessa área");
@@ -67,25 +61,14 @@ public class UsuarioBean {
 
 	}
 
-	public void pesquisarUsuario() {
-
-		Usuario usuarioPesquisar = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
-		List<Usuario> usuarioSelecionado = new ArrayList<Usuario>();
-		usuarioSelecionado.add(usuarioPesquisar);
-		this.listaUsuarios = usuarioSelecionado;
-		if (usuarioPesquisar == null) {
-			addMessageError("Nenhum usuario encontrado", "Não encontrado");
-		} else {
-			addMessage("Buscar realizada com sucesso", "Sucesso!!");
-		}
-	}
-
+	// USER - USUARIO SALVAR SEUS DADOS ALTERADOS.
 	public void salvarUsuario() throws IOException {
 
 		if (this.usuarioDAO.salvar(this.usuario)) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Sucesso !!!"));
-			abrirPesquisarUsuario();
+			this.UsuarioLogado = this.usuario;
+			abrirInicioUsuario();
 
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -94,20 +77,26 @@ public class UsuarioBean {
 
 	}
 
-	public void editarUsuario() throws IOException {
+	/*public void editarUsuario() throws IOException {
 
 		Usuario usuarioEditar = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
 		this.usuario = usuarioEditar;
-		abrirEditarUsuario();
+		abrirMeusDados();
 
+	}*/
+	
+	public void editarUsuario() throws IOException {
+
+	Usuario usuarioEditar = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
+	this.usuario = usuarioEditar;
+	abrirMeusDados();
+
+}
+
+	public void excluirConta() {
+		System.out.println("senha: " +this.UsuarioLogado.getSenha());
 	}
-
-	public void inserirUsuario() throws IOException {
-
-		this.limparMensagem();
-		abrirInserirPessoa();
-	}
-
+	
 	public void inserirTelefones() {
 		if (!this.validaExisteTelefone(this.telefone)) {
 
@@ -138,23 +127,11 @@ public class UsuarioBean {
 
 	}
 
-	public void novoUsuario() throws IOException {
-		// VALIDA EMAIL EXISTENTE PARA CADASTRO DE NOVO USUÁRIO.
-		usuarioExiste = this.usuarioDAO.pesquisar(this.usuario.getEmail());
-		if (usuarioExiste == null) {
-			salvarUsuario();
-		} else {
-			addMessageError("Email já cadastrado.", "Insira um email diferente.");
-		}
-
-	}
-
 	public void listaTelefoneCad() throws IOException {
 		Usuario usuarioSelecionado = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
 		this.usuario = usuarioSelecionado;
 		System.out.println(this.usuario.getNome());
 		this.emailUsuarioSelecionado = "";
-		// abrirListaTelefone();
 	}
 
 	public void limparMensagem() {
@@ -186,22 +163,10 @@ public class UsuarioBean {
 	}
 
 	// DIRECIONAR PAGINAS
-	public void abrirPesquisarUsuario() throws IOException {
+	public void abrirInicioUsuario() throws IOException {
 		this.limpar();
 		this.listaUsuarios = this.usuarioDAO.listarTodos(this.areaProfissionalSelecionada);
-		FacesContext.getCurrentInstance().getExternalContext().redirect(PESQUISAR);
-	}
-
-	public void abrirInserirPessoa() throws IOException {
-		FacesContext.getCurrentInstance().getExternalContext().redirect(INSERIR);
-	}
-
-	public void abrirEditarUsuario() throws IOException {
-		FacesContext.getCurrentInstance().getExternalContext().redirect(EDITAR);
-	}
-
-	public void abrirListaTelefone() throws IOException {
-		FacesContext.getCurrentInstance().getExternalContext().redirect(LISTATELEFONE);
+		FacesContext.getCurrentInstance().getExternalContext().redirect(INICIO);
 	}
 
 	public void abrirMeusDados() throws IOException {

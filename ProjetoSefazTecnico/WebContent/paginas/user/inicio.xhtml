@@ -10,7 +10,7 @@
 </h:head>
 
 <h:body>
-	<p:outputLabel value="Menu usuário" />
+	<p:outputLabel value=" - Menu usuário -" />
 
 	<h2>Olá #{UsuarioBean.usuarioLogado.nome}, bem vindo a lista de
 		profissionais</h2>
@@ -28,12 +28,13 @@
 						target="#{UsuarioBean.emailUsuarioSelecionado}"
 						value="#{UsuarioBean.usuarioLogado.email}" />
 				</p:menuitem>
-				<p:menuitem value="Excluir"></p:menuitem>
+				<p:menuitem value="Excluir" onclick="PF('dlgExcluirConta').show()"></p:menuitem>
 			</p:submenu>
 			<p:submenu label=" Sair" icon="pi pi-power-off">
 			</p:submenu>
 		</p:menubar>
 		<br></br>
+		<p:outputLabel value="Temos #{UsuarioBean.listaUsuarios.size()} profissionais cadastrados"/>
 		<p:dataView id="dvListaProfissionais"
 			value="#{UsuarioBean.listaUsuarios}" var="profissional"
 			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
@@ -105,6 +106,13 @@
 					update="formPrinc,dlgPesquisarProfissional"
 					style="margin-botton:10px">
 				</p:commandButton>
+			</h:panelGrid>
+		</p:dialog>
+		<p:dialog id="dlgExcluir" widgetVar="dlgExcluirConta" header="Excluir Conta">
+			<h:panelGrid>
+			<p:outputLabel value="Digite sua senha para excluir a conta"/>
+			<p:inputText value="senha"/>
+			<p:commandButton value="Ok" actionListener="#{UsuarioBean.excluirConta}"/>
 			</h:panelGrid>
 		</p:dialog>
 	</h:form>
