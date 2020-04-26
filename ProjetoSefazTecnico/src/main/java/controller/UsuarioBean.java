@@ -94,15 +94,6 @@ public class UsuarioBean {
 
 	}
 
-	public void removerUsuario() {
-
-		this.usuarioDAO.remover(emailUsuarioSelecionado);
-		limpar();
-		this.listaUsuarios = this.usuarioDAO.listarTodos("");
-		addMessage("* Usuário deletado com sucesso", "Lista recarregada");
-
-	}
-
 	public void editarUsuario() throws IOException {
 
 		Usuario usuarioEditar = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);

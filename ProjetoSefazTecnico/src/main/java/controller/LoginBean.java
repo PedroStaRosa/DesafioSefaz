@@ -18,6 +18,7 @@ import entity.Usuario;
 @ManagedBean(name = "loginBean")
 @RequestScoped
 public class LoginBean {
+	
 
 	// RECEBE VALORES DE ACESSO DA LOGIN.XHTML
 	private String usuarioInput, senhaInput;
