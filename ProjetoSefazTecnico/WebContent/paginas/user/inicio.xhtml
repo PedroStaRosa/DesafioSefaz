@@ -111,8 +111,8 @@
 		<p:dialog id="dlgExcluir" widgetVar="dlgExcluirConta" header="Excluir Conta">
 			<h:panelGrid>
 			<p:outputLabel value="Digite sua senha para excluir a conta"/>
-			<p:inputText value="senha"/>
-			<p:commandButton value="Ok" actionListener="#{UsuarioBean.excluirConta}"/>
+			<p:inputText value="#{UsuarioBean.confirmaSenha}"/>
+			<p:commandButton value="Ok" actionListener="#{UsuarioBean.excluirConta}" update="@form"/>
 			</h:panelGrid>
 		</p:dialog>
 	</h:form>

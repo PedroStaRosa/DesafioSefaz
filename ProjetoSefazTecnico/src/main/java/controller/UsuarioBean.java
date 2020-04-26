@@ -24,6 +24,7 @@ public class UsuarioBean {
 	private List<Usuario> listaUsuarios;
 	private String emailUsuarioSelecionado;
 	private String areaProfissionalSelecionada = "";
+	private String confirmaSenha;
 	private long idTelefoneSelecionado; // PARA IMPLEMENTAR CASO USUARIO QUERIA EXCLUIR UM TELEFONE DE SUA LISTA( EM
 										// DESENV. )
 
@@ -32,6 +33,7 @@ public class UsuarioBean {
 
 	private static final String INICIO = "inicio.xhtml";
 	private static final String MEUS_DADOS = "meusDados.xhtml";
+	private static final String SAIR = "WebContent/login.xhtml";
 
 	public UsuarioBean() {
 
@@ -77,26 +79,24 @@ public class UsuarioBean {
 
 	}
 
-	/*public void editarUsuario() throws IOException {
+	public void editarUsuario() throws IOException {
 
 		Usuario usuarioEditar = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
 		this.usuario = usuarioEditar;
 		abrirMeusDados();
-
-	}*/
-	
-	public void editarUsuario() throws IOException {
-
-	Usuario usuarioEditar = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
-	this.usuario = usuarioEditar;
-	abrirMeusDados();
-
-}
-
-	public void excluirConta() {
-		System.out.println("senha: " +this.UsuarioLogado.getSenha());
 	}
-	
+
+	public void excluirConta() throws IOException {
+		System.out.println("senha: " + this.UsuarioLogado.getSenha());
+
+		if (this.confirmaSenha.equals(this.UsuarioLogado.getSenha())) {
+			this.usuarioDAO.remover(this.UsuarioLogado.getEmail());
+			abrirLogin();
+		} else {
+			addMessageError("Senha não confere", "Senha digitada nao confere.");
+		}
+	}
+
 	public void inserirTelefones() {
 		if (!this.validaExisteTelefone(this.telefone)) {
 
@@ -173,6 +173,10 @@ public class UsuarioBean {
 		FacesContext.getCurrentInstance().getExternalContext().redirect(MEUS_DADOS);
 	}
 
+	public void abrirLogin() throws IOException {
+		FacesContext.getCurrentInstance().getExternalContext().redirect(SAIR);
+	}
+
 	// GETTERS AND SETTERS
 	public Usuario getUsuario() {
 		return usuario;
@@ -236,5 +240,13 @@ public class UsuarioBean {
 
 	public void setAreaProfissionalSelecionada(String areaProfissionalSelecionada) {
 		this.areaProfissionalSelecionada = areaProfissionalSelecionada;
+	}
+
+	public String getConfirmaSenha() {
+		return confirmaSenha;
+	}
+
+	public void setConfirmaSenha(String confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
 	}
 }
