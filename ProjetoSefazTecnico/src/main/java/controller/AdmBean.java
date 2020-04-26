@@ -32,7 +32,7 @@ public class AdmBean {
 	private Usuario usuarioExiste; // SERÁ PREENCHIDO NO INSERIR CASO EMAIL SEJA ENCONTRADO, VALIDA EMAIL EXISTENTE
 
 	private static final String INSERIR = "inserirUsuario.xhtml";
-	private static final String PESQUISAR = "AdmCarregarUsuarios.xhtml";
+	private static final String PESQUISAR = "painelAdm.xhtml";
 	private static final String LISTATELEFONE = "listaTelefone.xhtml";
 	private static final String EDITAR = "editarUsuario.xhtml";
 	private static final String MEUS_DADOS = "meusDados.xhtml";
