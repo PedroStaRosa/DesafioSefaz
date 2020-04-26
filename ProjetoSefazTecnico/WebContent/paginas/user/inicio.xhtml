@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<title>Inicio</title>
+</h:head>
+
+<h:body>
+	<p:outputLabel value="Olá #{UsuarioBean.usuarioLogado.nome}" />
+
+	<h2>Bem vindo a lista de profisionais</h2>
+
+	<h:form id="formPrinc">
+		<p:menubar>
+			<p:submenu label=" Pesquisar Profissionais" icon="pi pi-search">
+			</p:submenu>
+			<p:submenu label=" Meus Dados" icon="pi pi-id-card">
+			</p:submenu>
+			<p:submenu label=" Sair" icon="pi pi-power-off">
+			</p:submenu>
+		</p:menubar>
+		<br></br>
+		<p:dataView id="dvListaProfissionais"
+			value="#{UsuarioBean.listaUsuarios}" var="profissional"
+			gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+			<p:dataViewGridItem>
+				<p:panel header="#{profissional.nome}" style="text-align:center">
+					<h:panelGrid>
+						<h:outputLabel value="email: #{profissional.email}" />
+						<h:outputLabel
+							value="Telefones cadastrados: #{profissional.telefones.size()}" />
+						<h:outputLabel
+							value="Área profissional: #{profissional.areaProfissional}" />
+					</h:panelGrid>
+					<p:commandButton value="ver telefone" icon="pi pi-search"
+						action="#{UsuarioBean.listaTelefoneCad}" update="@form"
+						oncomplete="PF('dlgTelefoneUser').show()">
+						<f:setPropertyActionListener value="#{profissional.email}"
+							target="#{UsuarioBean.emailUsuarioSelecionado}" />
+					</p:commandButton>
+				</p:panel>
+			</p:dataViewGridItem>
+			<p:dataViewListItem>
+				<p:panel>
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Nome: " />
+						<h:outputLabel value="#{profissional.nome}" />
+						<h:outputLabel value="Email: " />
+						<h:outputLabel value="#{profissional.email}" />
+						<h:outputLabel value="Área profissional: " />
+						<h:outputLabel value="#{profissional.areaProfissional}" />
+						<h:outputLabel
+							value="Telefones cadastrados: #{profissional.telefones.size()}" />
+					</h:panelGrid>
+					<p:commandButton value="ver telefone" icon="pi pi-search"
+						action="#{UsuarioBean.listaTelefoneCad}" update="@form"
+						oncomplete="PF('dlgTelefoneUser').show()">
+						<f:setPropertyActionListener value="#{profissional.email}"
+							target="#{UsuarioBean.emailUsuarioSelecionado}" />
+					</p:commandButton>
+				</p:panel>
+			</p:dataViewListItem>
+		</p:dataView>
+
+		<p:dialog id="dlgTelefone" header="Telefones"
+			widgetVar="dlgTelefoneUser" modal="true" showEffect="explode"
+			closable="false">
+			<p:outputLabel value="#{UsuarioBean.usuario.nome}" />
+			<p:panel>
+				<p:dataTable id="listaTelefones" var="telefone"
+					value="#{UsuarioBean.usuario.telefones}">
+					<p:column headerText="Telefone" style="text-align:center">
+						<h:outputText
+							value="(#{telefone.ddd}) #{telefone.numero} - #{telefone.tipo}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Ok" onclick="PF('dlgTelefoneUser').hide();" />
+			</p:panel>
+		</p:dialog>
+		<p:dialog header="Área Profissional"></p:dialog>
+
+	</h:form>
+</h:body>
+</html>

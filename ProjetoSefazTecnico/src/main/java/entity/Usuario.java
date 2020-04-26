@@ -74,11 +74,4 @@ public class Usuario {
 		this.areaProfissional = areaProfissional;
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [email=" + email + ", nome=" + nome + ", senha=" + senha + ", areaProfissional="
-				+ areaProfissional + ", telefones=" + telefones + "]";
-	}
-
-
 }

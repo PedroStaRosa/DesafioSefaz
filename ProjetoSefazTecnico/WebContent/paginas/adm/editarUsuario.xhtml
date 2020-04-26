@@ -54,13 +54,16 @@
 						cellpadding="10">
 						<h:panelGrid columns="2" style="margin-bottom:20px">
 							<h:outputLabel value="DDD " />
-							<p:inputText size="3" style="margin-"
-								value="#{UsuarioBean.telefone.ddd}" />
+							<p:selectOneMenu value="#{UsuarioBean.telefone.ddd}"
+								required="true" requiredMessage="* Selecione um DDD.">
+								<f:selectItem itemLabel="DDD" itemValue="" />
+								<f:selectItems value="#{selectOneMenu.ddd}" />
+							</p:selectOneMenu>
 							<h:outputLabel value="Numero" />
-							<p:inputText value="#{UsuarioBean.telefone.numero}" />
+							<p:inputMask value="#{UsuarioBean.telefone.numero}"  mask="99999999?9"/>
 							<h:outputLabel value="Tipo " />
 							<p:selectOneRadio id="tipo" value="#{UsuarioBean.telefone.tipo}"
-								unselectable="true" >
+								unselectable="true">
 								<f:selectItem itemLabel="Celular" itemValue="Celular" />
 								<f:selectItem itemLabel="Residencial" itemValue="Residencial" />
 								<f:selectItem itemLabel="Fax" itemValue="Fax" />
@@ -90,7 +93,7 @@
 		</p:panel>
 		<p:commandButton value="OK" update="@form"
 			actionListener="#{UsuarioBean.salvarUsuario}">
-			<p:confirm header="Cadastro" message="Os dados esta corretos ?"></p:confirm>
+			<p:confirm header="Edição" message="Os dados esta corretos ?"></p:confirm>
 
 		</p:commandButton>
 

@@ -74,10 +74,4 @@ public class Telefone {
 		this.usuario = usuario;
 	}
 
-	@Override
-	public String toString() {
-		return "Telefone [id=" + id + ", numero=" + numero + ", tipo=" + tipo + ", ddd=" + ddd + ", usuario=" + usuario
-				+ "]";
-	}
-
 }

@@ -25,7 +25,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public boolean salvar(Usuario usuario) {
-		//METODO "SALVAR" FARÁ O PAPEL DE INSERT E UPDATE, ATRAVES DO " MERGE ".
+		// METODO "SALVAR" FARÁ O PAPEL DE INSERT E UPDATE, ATRAVES DO " MERGE ".
 		try {
 			this.ent = JpaUtil.getEntityManager();
 			tx = ent.getTransaction();

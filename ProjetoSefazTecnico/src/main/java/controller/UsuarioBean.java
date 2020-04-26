@@ -24,6 +24,7 @@ public class UsuarioBean {
 	private Telefone telefone;
 	private List<Usuario> listaUsuarios;
 	private String emailUsuarioSelecionado;
+	private String areaProfissionalSelecionada = "";
 	private long idTelefoneSelecionado; // PARA IMPLEMENTAR CASO USUARIO QUERIA EXCLUIR UM TELEFONE DE SUA LISTA( EM DESENV. )
 
 	private UsuarioDAO usuarioDAO;
@@ -31,7 +32,7 @@ public class UsuarioBean {
 	private Usuario usuarioExiste; // SERÁ PREENCHIDO NO INSERIR CASO cpf SEJA ENCONTRADO, VALIDA CPF EXISTENTE
 
 	private static final String INSERIR = "inserirUsuario.xhtml";
-	private static final String PESQUISAR = "carregarUsuarios.xhtml";
+	private static final String PESQUISAR = "AdmCarregarUsuarios.xhtml";
 	private static final String LISTATELEFONE = "listaTelefone.xhtml";
 	private static final String EDITAR = "editarUsuario.xhtml";
 
@@ -152,7 +153,8 @@ public class UsuarioBean {
 	public void listaTelefoneCad() throws IOException {
 		Usuario usuarioSelecionado = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
 		this.usuario = usuarioSelecionado;
-		abrirListaTelefone();
+		System.out.println(this.usuario.getNome());
+		//abrirListaTelefone();
 	}
 	
 	public void limparMensagem() {
@@ -256,6 +258,14 @@ public class UsuarioBean {
 
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		UsuarioLogado = usuarioLogado;
+	}
+
+	public String getAreaProfissionalSelecionada() {
+		return areaProfissionalSelecionada;
+	}
+
+	public void setAreaProfissionalSelecionada(String areaProfissionalSelecionada) {
+		this.areaProfissionalSelecionada = areaProfissionalSelecionada;
 	}
 
 }

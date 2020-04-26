@@ -11,12 +11,15 @@
 		<p:panel id="panelPessoa" header="Dados do Usuário"
 			style="margin-bottom:20px">
 			<h:panelGrid columns="2">
-				<h:outputLabel value="Nome " for="nome" />
-				<p:inputText id="nome" required="true"
-					value="#{UsuarioBean.usuario.nome}" />
-				<h:outputLabel value="Email " for="email" />
-				<p:inputText id="email" value="#{UsuarioBean.usuario.email}"
-					disabled="true" />
+			<p>
+				<h:outputLabel value="Nome: #{UsuarioBean.usuario.nome}" />
+				</p>
+				<p>
+				<h:outputLabel value="Email: #{UsuarioBean.usuario.email} " />
+				</p>
+				<p>
+				<h:outputLabel value="Área profissional: #{UsuarioBean.usuario.areaProfissional}" /> 
+				</p>
 			</h:panelGrid>
 		</p:panel>
 		<h:outputLabel value="#{UsuarioBean.mensagem}" style="color: red" />
@@ -49,7 +52,7 @@
 		<p:commandButton value="Sim" update="@form"
 			actionListener="#{UsuarioBean.editarUsuario}"
 			style="margin-left:20px" />
-			<p></p>
+		<p></p>
 		<p:commandButton value="Voltar" update="@form"
 			actionListener="#{UsuarioBean.abrirPesquisarUsuario}"
 			immediate="true" style="margin-left:20px" />

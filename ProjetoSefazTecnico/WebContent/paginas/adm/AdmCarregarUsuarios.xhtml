@@ -14,7 +14,10 @@
 		<p:autoUpdate />
 	</p:messages>
 	<p:growl id="messagem" showDetail="true"></p:growl>
-	<p:outputLabel value="Olá #{UsuarioBean.usuarioLogado.nome}"/>
+	<p>
+		<p:outputLabel value="Painel Administrativo" />
+	</p>
+	<p:outputLabel value="Olá #{UsuarioBean.usuarioLogado.nome}." />
 	<h:form>
 		<p:fieldset legend="Lista de usuários">
 
@@ -48,10 +51,12 @@
 			<h:outputLabel value="#{UsuarioBean.mensagem}"
 				style="color: red; font-weight: bold " />
 			<p:dataTable value="#{UsuarioBean.listaUsuarios}" var="usuario">
-				<p:column headerText="Nome" sortBy="#{usuario.nome}">
+				<p:column headerText="Nome" sortBy="#{usuario.nome}"
+					style="text-align:center">
 					<h:outputText value="#{usuario.nome}"></h:outputText>
 				</p:column>
-				<p:column headerText="Email" sortBy="#{usuario.email}">
+				<p:column headerText="Email" sortBy="#{usuario.email}"
+					style="text-align:center">
 					<h:outputText value="#{usuario.email}"></h:outputText>
 				</p:column>
 				<p:column headerText="Telefone principal" style="text-align:center">
@@ -61,6 +66,10 @@
 				<p:column headerText="Telefones cadastrados"
 					style="text-align:center" sortBy="#{usuario.telefones.size()}">
 					<h:outputText value="#{usuario.telefones.size()}"></h:outputText>
+				</p:column>
+				<p:column headerText="Área Prof."
+					sortBy="#{usuario.areaProfissional}" style="text-align:center">
+					<h:outputText value="#{usuario.areaProfissional}"></h:outputText>
 				</p:column>
 				<p:column headerText="Ver telefones" width="8%"
 					style="text-align:center">

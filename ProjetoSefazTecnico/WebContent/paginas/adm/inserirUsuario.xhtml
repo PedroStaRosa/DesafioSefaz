@@ -43,6 +43,14 @@
 				<h:outputLabel value="Confirme senha: *" />
 				<p:password id="pwd2" value="#{UsuarioBean.usuario.senha}"
 					label="Password 2" redisplay="true" />
+				<p:outputLabel value="Área Profissional: " />
+				<p:selectOneMenu id="areaProf"
+					value="#{loginBean.usuarioCadastro.areaProfissional}"
+					required="true"
+					requiredMessage="* Selecione uma área profissional.">
+					<f:selectItem itemLabel="Selecione um" itemValue="" />
+					<f:selectItems value="#{selectOneMenu.areaProfissional}" />
+				</p:selectOneMenu>
 
 				<h:outputLabel value="* Campo obrigatório. " style="color: red" />
 			</h:panelGrid>
@@ -50,32 +58,49 @@
 		</p:panel>
 		<h:outputLabel value="#{UsuarioBean.mensagem}" style="color: red" />
 		<p></p>
-		<p:panel id="panelLivros" header="Adicionar telefones"
+		<p:panel id="panelTelefones" header="Adicionar telefones"
 			style="margin-bottom:20px">
 			<p:column colspan="4">
-					<p:panelGrid columns="1" style="margin-bottom:20px"
-						cellpadding="10">
-						<h:panelGrid columns="2" style="margin-bottom:20px">
-							<h:outputLabel value="DDD " />
-							<p:inputText size="3" style="margin-"
-								value="#{UsuarioBean.telefone.ddd}" />
-							<h:outputLabel value="Numero" />
-							<p:inputText value="#{UsuarioBean.telefone.numero}" />
-							<h:outputLabel value="Tipo " />
-							<p:selectOneRadio id="tipo" value="#{UsuarioBean.telefone.tipo}"
-								unselectable="true">
-								<f:selectItem itemLabel="Celular" itemValue="Celular" />
-								<f:selectItem itemLabel="Residencial" itemValue="Residencial" />
-								<f:selectItem itemLabel="Fax" itemValue="Fax" />
-							</p:selectOneRadio>
-							<p:commandButton value="Inserir telefone" update="listaTelefones"
-								actionListener="#{UsuarioBean.inserirTelefones}" />
-						</h:panelGrid>
-					</p:panelGrid>
-				<p:outputLabel
-					value="Você poderá adicionar seus telefones mais tarde, é só editar! "
-					style="color: red" />
+				<p:panelGrid columns="1" style="margin-bottom:20px" cellpadding="10">
+					<h:panelGrid columns="2" style="margin-bottom:20px">
+						<h:outputLabel value="DDD " />
+						<p:selectOneMenu value="#{UsuarioBean.telefone.ddd}"
+							required="true" requiredMessage="* Selecione um DDD.">
+							<f:selectItem itemLabel="DDD" itemValue="" />
+							<f:selectItems value="#{selectOneMenu.ddd}" />
+						</p:selectOneMenu>
+						<h:outputLabel value="Numero" />
+						<p:inputMask value="#{UsuarioBean.telefone.numero}"
+							mask="99999999?9" />
+						<h:outputLabel value="Tipo " />
+						<p:selectOneRadio id="tipo" value="#{UsuarioBean.telefone.tipo}"
+							unselectable="true">
+							<f:selectItem itemLabel="Celular" itemValue="Celular" />
+							<f:selectItem itemLabel="Residencial" itemValue="Residencial" />
+							<f:selectItem itemLabel="Fax" itemValue="Fax" />
+						</p:selectOneRadio>
+						<p:commandButton value="Inserir telefone"
+							update="listaTelefones,panelTelefones"
+							actionListener="#{UsuarioBean.inserirTelefones}" />
+					</h:panelGrid>
+				</p:panelGrid>
+				<p:dataTable id="listaTelefones" var="telefone"
+					value="#{UsuarioBean.usuario.telefones}">
+					<p:column headerText="DDD">
+						<h:outputText value="#{telefone.ddd}" style="width: 20%" />
+					</p:column>
+					<p:column headerText="Numero" style="width: 40%">
+						<h:outputText value="#{telefone.numero}" />
+					</p:column>
+					<p:column headerText="Tipo" style="width: 40%">
+						<h:outputText value="#{telefone.tipo}" />
+					</p:column>
+				</p:dataTable>
 			</p:column>
+			<p:outputLabel
+				value="Você poderá adicionar seus telefones mais tarde, é só editar! "
+				style="color: red" />
+
 		</p:panel>
 		<p:commandButton value="OK" update="@form"
 			actionListener="#{UsuarioBean.novoUsuario}">

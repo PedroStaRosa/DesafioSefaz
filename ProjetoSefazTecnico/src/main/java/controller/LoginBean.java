@@ -26,8 +26,9 @@ public class LoginBean {
 	private Telefone telefoneUsuarioCadastro;
 	private String mensagem;
 
-	private static final String PESQUISAR = "paginas/carregarUsuarios.xhtml";
-	private static final String LOGIN = "login.xhtml";
+	private static final String PAINEL_ADM = "paginas/adm/AdmCarregarUsuarios.xhtml";
+	private static final String PAINEL_USER = "paginas/user/inicio.xhtml";
+	// private static final String LOGIN = "login.xhtml";
 
 	public LoginBean() {
 		this.usuarioDao = new UsuarioDAOImpl();
@@ -45,7 +46,12 @@ public class LoginBean {
 
 					FacesContext facesContext = FacesContext.getCurrentInstance();
 					facesContext.getExternalContext().getSessionMap().put("usuarioLogado", usuarioPesquisa);
-					facesContext.getExternalContext().redirect(PESQUISAR);
+					if (usuarioPesquisa.getEmail().equals("admin@admin.com")) {
+						facesContext.getExternalContext().redirect(PAINEL_ADM);
+					} else {
+						facesContext.getExternalContext().redirect(PAINEL_USER);
+					}
+
 				} else {
 					addMessageError("Usuario ou Senha inválida.");
 					/*
