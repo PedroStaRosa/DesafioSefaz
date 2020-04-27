@@ -112,9 +112,19 @@
 			<h:panelGrid>
 			<p:outputLabel value="Digite sua senha para excluir a conta"/>
 			<p:inputText value="#{UsuarioBean.confirmaSenha}"/>
-			<p:commandButton value="Ok" actionListener="#{UsuarioBean.excluirConta}" update="@form"/>
+			<p:commandButton value="Ok" action="#{UsuarioBean.excluirConta}" update="@form">
+			<p:confirm header="Excluir" message="Certeza que deseja excluir sua conta ?"></p:confirm>
+			</p:commandButton>
 			</h:panelGrid>
 		</p:dialog>
+				<p:confirmDialog global="true">
+			<h:panelGrid columns="2" width="100%" style="text-align:center">
+				<p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"
+					icon="ui-icon-check" style="color:green" />
+				<p:commandButton value="Não" styleClass="ui-confirmdialog-no"
+					icon="ui-icon-close" style="color:red" />
+			</h:panelGrid>
+		</p:confirmDialog>
 	</h:form>
 </h:body>
 </html>

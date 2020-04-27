@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import entity.Telefone;
 import entity.Usuario;
 import sun.net.www.content.image.jpeg;
 import util.JpaUtil;
@@ -126,6 +127,28 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		}
 
 		return usuarioList;
+
+	}
+
+	@Override
+	public void removerTelefone(long idTelefone) {
+		try {
+			this.ent = JpaUtil.getEntityManager();
+			Telefone telefoneRemover = ent.find(Telefone.class, idTelefone);
+			tx = ent.getTransaction();
+			tx.begin();
+			ent.remove(telefoneRemover);
+			tx.commit();
+
+		} catch (Exception e) {
+			if (ent.isOpen()) {
+				tx.rollback();
+			}
+		} finally {
+			if (ent.isOpen()) {
+				ent.close();
+			}
+		}
 
 	}
 

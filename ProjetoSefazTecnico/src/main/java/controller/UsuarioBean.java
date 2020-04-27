@@ -45,7 +45,8 @@ public class UsuarioBean {
 		this.telefone = new Telefone();
 		this.listaUsuarios = new ArrayList<Usuario>();
 		this.usuarioDAO = new UsuarioDAOImpl();
-		this.listaUsuarios = this.usuarioDAO.listarTodos("");
+		// this.listaUsuarios = this.usuarioDAO.listarTodos("");
+		pesquisarTodos();
 		if (this.listaUsuarios.isEmpty()) {
 			addMessage("Lista vazia", "Nenhum usuário cadastrado");
 			;
@@ -55,6 +56,17 @@ public class UsuarioBean {
 	public void pesquisarTodos() {
 		this.emailUsuarioSelecionado = ""; // PERDENDO O VALOR, CASO VENHA DE UMA PESQUISA INDIVIDUAL.
 		this.listaUsuarios = this.usuarioDAO.listarTodos(this.areaProfissionalSelecionada);
+
+		/*
+		 * EXCLUINDO O ACESSO " ADMIN " DA LISTA PARA NAO SER VISIVEL AOS USUARIOS,
+		 * IMPLEMENTAÇÃO FUTURA COLOCAR PERFIL NO USUARIO.
+		 */
+		for (int i = 0; i < this.listaUsuarios.size(); i++) {
+			if (this.listaUsuarios.get(i).getEmail().equals("admin@admin.com")) {
+				this.listaUsuarios.remove(i);
+			}
+		}
+
 		if (this.listaUsuarios.isEmpty()) {
 			addMessageError("Desculpe.", "Não temos nenhum profissional cadastrado nessa área");
 		} else {
@@ -86,15 +98,19 @@ public class UsuarioBean {
 		abrirMeusDados();
 	}
 
-	public void excluirConta() throws IOException {
+	public String excluirConta() throws IOException {
 		System.out.println("senha: " + this.UsuarioLogado.getSenha());
 
 		if (this.confirmaSenha.equals(this.UsuarioLogado.getSenha())) {
 			this.usuarioDAO.remover(this.UsuarioLogado.getEmail());
-			abrirLogin();
+			// abrirLogin();
+			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+			addMessage("Conta excluida", "esperamos que retorne !!!");
+			return "/login.xhtml?faces-redirect=true";
 		} else {
 			addMessageError("Senha não confere", "Senha digitada nao confere.");
 		}
+		return "";
 	}
 
 	public void inserirTelefones() {
@@ -134,6 +150,15 @@ public class UsuarioBean {
 		this.emailUsuarioSelecionado = "";
 	}
 
+	public void excluirTelefone() {
+		System.out.println("Id telefone selecionado" +this.idTelefoneSelecionado);
+		
+		this.usuarioDAO.removerTelefone(this.idTelefoneSelecionado);
+		this.usuario = this.usuarioDAO.pesquisar(emailUsuarioSelecionado);
+		addMessage("* Telefone deletado com sucesso", "Lista recarregada");
+		
+	}
+	
 	public void limparMensagem() {
 		this.mensagem = "";
 	}

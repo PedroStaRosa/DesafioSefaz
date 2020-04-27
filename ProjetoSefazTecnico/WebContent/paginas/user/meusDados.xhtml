@@ -4,16 +4,18 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
 </h:head>
 
 <h:body>
 	<p:messages id="messages" closable="true">
 		<p:autoUpdate />
 	</p:messages>
-	<p:growl id="messagem" showDetail="true"></p:growl>
+
 	<h1>Meus dados</h1>
 	<h:form id="form">
-
+		<p:growl id="messagem" showDetail="true"></p:growl>
 		<p:panel id="panelPessoa" header="Editar Usuário"
 			style="margin-bottom:20px">
 			<h:panelGrid columns="2">
@@ -78,11 +80,33 @@
 						<p:column headerText="DDD">
 							<h:outputText value="#{telefone.ddd}" style="width: 20%" />
 						</p:column>
-						<p:column headerText="Numero" style="width: 40%">
+						<p:column headerText="Numero" style="width: 30%">
 							<h:outputText value="#{telefone.numero}" />
 						</p:column>
-						<p:column headerText="Tipo" style="width: 40%">
+						<p:column headerText="Tipo" style="width: 30%">
 							<h:outputText value="#{telefone.tipo}" />
+						</p:column>
+						<p:column headerText="Remover" width="20%"
+							style="text-align:center">
+							<p:commandButton icon="pi pi-trash"
+								action="#{UsuarioBean.excluirTelefone}" update="@form">
+								<f:setPropertyActionListener
+									target="#{UsuarioBean.idTelefoneSelecionado}"
+									value="#{telefone.id}" />
+								<p:confirm header="Remoção"
+									message="Tem certeza que dejesa excluir ?"></p:confirm>
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<h:panelGrid columns="2" width="100%" style="text-align:center">
+									<p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"
+										icon="ui-icon-check" style="color:green" />
+									<p:commandButton value="Não" styleClass="ui-confirmdialog-no"
+										icon="ui-icon-close" style="color:red" />
+								</h:panelGrid>
+
+							</p:confirmDialog>
 						</p:column>
 					</p:dataTable>
 				</p:panel>
@@ -109,8 +133,8 @@
 		</p:confirmDialog>
 
 		<p:commandButton value="Voltar" update="@form"
-			actionListener="#{UsuarioBean.abrirInicioUsuario}"
-			immediate="true" style="margin-left:20px" />
+			actionListener="#{UsuarioBean.abrirInicioUsuario}" immediate="true"
+			style="margin-left:20px" />
 	</h:form>
 </h:body>
 </html>

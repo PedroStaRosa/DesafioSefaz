@@ -16,4 +16,5 @@ public interface UsuarioDAO {
 
 	public List<Usuario> listarTodos(String areprofissional);
 	
+	public void removerTelefone(long idTelefone);
 }
