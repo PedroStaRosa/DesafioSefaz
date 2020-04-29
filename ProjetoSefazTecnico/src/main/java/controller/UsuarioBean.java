@@ -66,7 +66,6 @@ public class UsuarioBean {
 				this.listaUsuarios.remove(i);
 			}
 		}
-
 		if (this.listaUsuarios.isEmpty()) {
 			addMessageError("Desculpe.", "Não temos nenhum profissional cadastrado nessa área");
 		} else {
@@ -79,16 +78,12 @@ public class UsuarioBean {
 	public void salvarUsuario() throws IOException {
 
 		if (this.usuarioDAO.salvar(this.usuario)) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Sucesso !!!"));
+			addMessage("Sucesso", "");
 			this.UsuarioLogado = this.usuario;
 			abrirInicioUsuario();
-
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Erro ao inserir !!!"));
+			addMessageError("Erro ao salvar", "");
 		}
-
 	}
 
 	public void editarUsuario() throws IOException {
@@ -99,7 +94,6 @@ public class UsuarioBean {
 	}
 
 	public String excluirConta() throws IOException {
-		System.out.println("senha: " + this.UsuarioLogado.getSenha());
 
 		if (this.confirmaSenha.equals(this.UsuarioLogado.getSenha())) {
 			this.usuarioDAO.remover(this.UsuarioLogado.getEmail());

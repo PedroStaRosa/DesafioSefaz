@@ -79,15 +79,14 @@
 				<p:outputLabel value="Insira um telefone principal." />
 				<h:panelGrid columns="3">
 					<h:outputLabel value="Telefone:" />
-					<p:selectOneMenu
-						value="#{loginBean.telefoneUsuarioCadastro.ddd}"
-						required="true"
-						requiredMessage="* Selecione um DDD.">
+					<p:selectOneMenu value="#{loginBean.telefoneUsuarioCadastro.ddd}"
+						required="true" requiredMessage="* Selecione um DDD.">
 						<f:selectItem itemLabel="DDD" itemValue="" />
 						<f:selectItems value="#{selectOneMenu.ddd}" />
 					</p:selectOneMenu>
 					<p:inputMask value="#{loginBean.telefoneUsuarioCadastro.numero}"
-						 mask="99999999?9" required="true" requiredMessage="* Informe seu telefone." />
+						mask="99999999?9" required="true"
+						requiredMessage="* Informe seu telefone." />
 				</h:panelGrid>
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 					<p:outputLabel value="Tipo:" />

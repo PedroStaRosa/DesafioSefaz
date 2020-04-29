@@ -40,13 +40,7 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.0.Final</version>
 		</dependency>
-
-		<!-- ORACLE -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0</version>
-		</dependency>
+		
 		<!-- HSQL -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>

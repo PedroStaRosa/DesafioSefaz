@@ -28,7 +28,6 @@ public class AdmBean {
 										// DESENV. )
 
 	private UsuarioDAO usuarioDAO;
-	private String mensagem;
 	private Usuario usuarioExiste; // SERÁ PREENCHIDO NO INSERIR CASO EMAIL SEJA ENCONTRADO, VALIDA EMAIL EXISTENTE
 
 	private static final String INSERIR = "inserirUsuario.xhtml";
@@ -56,14 +55,12 @@ public class AdmBean {
 
 	public void pesquisarTodos() {
 		this.emailUsuarioSelecionado = ""; // PERDENDO O VALOR, CASO VENHA DE UMA PESQUISA INDIVIDUAL.
-		System.out.println("area" + this.areaProfissionalSelecionada);
 		this.listaUsuarios = this.usuarioDAO.listarTodos(this.areaProfissionalSelecionada);
 		if (this.listaUsuarios.isEmpty()) {
 			addMessageError("Desculpe.", "Não temos nenhum profissional cadastrado nessa área");
 		} else {
 			addMessage("Lista Carregada com Sucesso", "Sucesso");
 		}
-
 	}
 
 	public void pesquisarUsuario() {
@@ -82,13 +79,11 @@ public class AdmBean {
 	public void salvarUsuario() throws IOException {
 
 		if (this.usuarioDAO.salvar(this.usuario)) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Sucesso !!!"));
+			addMessage("Sucesso", "");
 			abrirPesquisarUsuario();
 
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Erro ao inserir !!!"));
+			addMessageError("Error ao salvar usuário.", "");
 		}
 
 	}
@@ -112,7 +107,6 @@ public class AdmBean {
 
 	public void inserirUsuario() throws IOException {
 
-		this.limparMensagem();
 		abrirInserirPessoa();
 	}
 
@@ -164,16 +158,11 @@ public class AdmBean {
 		this.emailUsuarioSelecionado = "";
 	}
 
-	public void limparMensagem() {
-		this.mensagem = "";
-	}
-
 	public void limpar() {
 		this.listaUsuarios = new ArrayList<Usuario>();
 		this.usuario = new Usuario();
 		this.usuario.setTelefones(new ArrayList<Telefone>());
 		this.telefone = new Telefone();
-		this.mensagem = "";
 		this.emailUsuarioSelecionado = "";
 	}
 
@@ -252,14 +241,6 @@ public class AdmBean {
 		this.idTelefoneSelecionado = idTelefoneSelecionado;
 	}
 
-	public String getMensagem() {
-		return mensagem;
-	}
-
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
-	}
-
 	public Usuario getUsuarioLogado() {
 		return UsuarioLogado;
 	}
@@ -275,5 +256,5 @@ public class AdmBean {
 	public void setAreaProfissionalSelecionada(String areaProfissionalSelecionada) {
 		this.areaProfissionalSelecionada = areaProfissionalSelecionada;
 	}
-	
+
 }
