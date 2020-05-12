@@ -165,6 +165,10 @@ public class UsuarioBean {
 		this.mensagem = "";
 		this.emailUsuarioSelecionado = "";
 	}
+	
+	public void logout() {
+		
+	}
 
 	// ADICIONA MENSAGENS
 	public void addMessage(String titulo, String detalhes) {
